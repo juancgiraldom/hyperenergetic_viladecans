@@ -229,7 +229,7 @@ app = DashProxy(
         'content':'width=device-width,initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0,'
     }],
     transforms=[MultiplexerTransform()], 
-    external_stylesheets=[dbc.themes.CYBORG],
+    external_stylesheets=[dbc.themes.CYBORG,'https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap'],
     external_scripts=[
         {'src': 'https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.0/html2canvas.min.js'}
     ]
