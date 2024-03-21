@@ -292,7 +292,7 @@ app.layout = dbc.Container([
         dbc.Label('/237 tonCO2',style={'fontSize':'150%'}),
         dbc.Label('for being net zero this year',style={'fontWeight':'bold','fontSize':'80%','color':'white',"text-align": "center","padding-left":'10px'})
     ],style={'fontWeight':'bold','color':'white',"text-align":"center",'objectFit':'contain'},
-    width={'size':10,'offset':2})),
+    width={'size':10,'offset':1})),
     dbc.Row([
         dbc.Col([
             dcc.Graph(
