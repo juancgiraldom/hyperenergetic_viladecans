@@ -1,9 +1,3 @@
-#!/usr/bin/env python
-# coding: utf-8
-
-# In[1]:
-
-
 import time
 import pandas as pd
 import geopandas
@@ -104,7 +98,7 @@ def add_register(metadata, category, activity, time_m):
 
     # Append the new row to the DataFrame
     metadata = pd.concat([metadata,new_row],ignore_index=True,axis=0)
-    new_carbon_credits = round(emissions/1000,2)
+    new_carbon_credits = round(emissions,2)
     CARBON_CREDITS += new_carbon_credits
     prin_msg = f"""
     SUMMARY:/n
@@ -211,7 +205,7 @@ act_cat_dict = conversion_dict.reset_index().set_index('activity')['category'].t
 
 #Initialize metadata
 metadata = pd.DataFrame(columns=['timestamp', 'category', 'activity', 'time', 'energy', 'money', 'emissions'])
-CARBON_CREDITS = metadata.emissions.sum()/1000
+CARBON_CREDITS = metadata.emissions.sum()
 
 
 colors = {
@@ -229,7 +223,7 @@ app = DashProxy(
         'content':'width=device-width,initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0,'
     }],
     transforms=[MultiplexerTransform()], 
-    external_stylesheets=[dbc.themes.CYBORG,'https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap'],
+    external_stylesheets=[dbc.themes.CYBORG],
     external_scripts=[
         {'src': 'https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.0/html2canvas.min.js'}
     ]
@@ -285,13 +279,20 @@ app.layout = dbc.Container([
             html.Br(),
             dbc.Row(dbc.Label('{:,.1f}'.format(CARBON_CREDITS),id='label-credits',style={'fontWeight':'bold','fontSize':'400%','color':'white',"text-align":"center",'objectFit':'contain'})),
             dbc.Row(dbc.Label('Carbon Credits',style={'fontWeight':'bold','fontSize':'100%','color':'white',"text-align": "center"}),align='start'),
-            dbc.Row(dbc.Label('1 tonCO2 avoided =  1 credit',style={'fontSize':'60%','color':'white',"text-align": "center"}),align='start'),
+            dbc.Row(dbc.Label('1 kgCO2 avoided =  1 credit',style={'fontSize':'60%','color':'white',"text-align": "center"}),align='start'),
             dbc.Row(dbc.Button('Exchange',id='button-exchange'),justify='center',align='center'),
             html.Br(),
             dbc.Row(dbc.Button('Register Activity',id='button-register'),justify='center',align='center'),
         ],width=5)
     ]),
     html.Br(),
+    dbc.Row(dbc.Col([
+        dbc.Label('You have reduced',style={'fontWeight':'bold','fontSize':'80%','color':'white',"text-align": "center","padding-right":'10px'}),
+        dbc.Label('{:,.1f}'.format(metadata.emissions.sum()/1000),id='label-goal',style={'fontSize':'300%'}),
+        dbc.Label('/237 tonCO2',style={'fontSize':'150%'}),
+        dbc.Label('for being net zero this year',style={'fontWeight':'bold','fontSize':'80%','color':'white',"text-align": "center","padding-left":'10px'})
+    ],style={'fontWeight':'bold','color':'white',"text-align":"center",'objectFit':'contain'},
+    width={'size':10,'offset':2})),
     dbc.Row([
         dbc.Col([
             dcc.Graph(
@@ -315,7 +316,13 @@ app.layout = dbc.Container([
             html.Br(),
             dbc.Row(dbc.Button('Rent Public Scooter',className="ms-auto", n_clicks=0)),
             html.Br(),
+            dbc.Row(dbc.Button('Get TMB Discount',className="ms-auto", n_clicks=0)),
+            html.Br(),
             dbc.Row(dbc.Button('Book Spinning Class',className="ms-auto", n_clicks=0)),
+            html.Br(),
+            dbc.Row(dbc.Button('Buy Eco-Products',className="ms-auto", n_clicks=0)),
+            html.Br(),
+            dbc.Row(dbc.Button('Buy Planting Toolkit',className="ms-auto", n_clicks=0)),
         ],style={'fontFamily':'Montserrat'}),
         dbc.ModalFooter(
             dbc.Button('Close',id='close-exchange',className="ms-auto", n_clicks=0),style={'fontFamily':'Montserrat'}
@@ -458,7 +465,8 @@ def toggle_modal_map(n1, n2, is_open):
         Output("modal-success", "is_open"),
         Output("modal-success-label", "children"),
         Output("label-credits", "children"),
-        Output("graph-bars", "figure")
+        Output("graph-bars", "figure"),
+        Output("label-goal", "children"),
     ],
     [Input("submit-register", "n_clicks"), Input("close-success", "n_clicks")],
     [State("modal-success", "is_open"),State("input-activity","value"),State("input-time","value")],
@@ -473,8 +481,8 @@ def toggle_modal_success(n1, n2, is_open,activity,time_m):
     else:
         print_msg = ''
     if n1 or n2:
-        return not is_open, print_msg, '{:,.1f}'.format(CARBON_CREDITS), create_chart(metadata)
-    return is_open, print_msg, '{:,.1f}'.format(CARBON_CREDITS), create_chart(metadata)
+        return not is_open, print_msg, '{:,.1f}'.format(CARBON_CREDITS), create_chart(metadata), '{:,.1f}'.format(metadata.emissions.sum()/1000)
+    return is_open, print_msg, '{:,.1f}'.format(CARBON_CREDITS), create_chart(metadata), '{:,.1f}'.format(metadata.emissions.sum()/1000)
 
 #CHANGE MAP
 @app.callback(
@@ -498,7 +506,3 @@ def change_map(selec_cat):
 
 if __name__ == "__main__":
     app.run_server(debug=False, port=8080)
-
-
-
-
