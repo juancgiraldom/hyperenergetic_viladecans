@@ -6,6 +6,7 @@
 
 import time
 import pandas as pd
+import geopandas
 import dash_bootstrap_components as dbc
 from dash_extensions.enrich import DashProxy, MultiplexerTransform
 import dash_leaflet as dl
