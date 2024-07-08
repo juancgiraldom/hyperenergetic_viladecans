@@ -310,19 +310,19 @@ app.layout = dbc.Container([
     dbc.Modal(id='modal-exchange',children=[
         dbc.ModalHeader(dbc.ModalTitle("Exchange Carbon Credits",style={'fontFamily':'Montserrat'})),
         dbc.ModalBody([
-            dbc.Row(dbc.Button('Renew PV Suscription',className="ms-auto", n_clicks=0)),
+            dbc.Row(dbc.Button('Renew PV Suscription',className="ms-auto", n_clicks=0, href='https://vilawatt.cat/es/contrata-energia/')),
             html.Br(),
-            dbc.Row(dbc.Button('Rent Public Bike',className="ms-auto", n_clicks=0)),
+            dbc.Row(dbc.Button('Rent Public Bike',className="ms-auto", n_clicks=0, href='https://www.ambici.cat/es/')),
             html.Br(),
-            dbc.Row(dbc.Button('Rent Public Scooter',className="ms-auto", n_clicks=0)),
+            dbc.Row(dbc.Button('Rent Public Scooter',className="ms-auto", n_clicks=0, href='https://www.ambici.cat/es/')),
             html.Br(),
-            dbc.Row(dbc.Button('Get TMB Discount',className="ms-auto", n_clicks=0)),
+            dbc.Row(dbc.Button('Get TMB Discount',className="ms-auto", n_clicks=0, href='https://www.tmb.cat/es/home')),
             html.Br(),
-            dbc.Row(dbc.Button('Book Spinning Class',className="ms-auto", n_clicks=0)),
+            dbc.Row(dbc.Button('Book Spinning Class',className="ms-auto", n_clicks=0, href='https://www.viladecans.cat/es/atriumpodium?nidView=11273')),
             html.Br(),
-            dbc.Row(dbc.Button('Buy Eco-Products',className="ms-auto", n_clicks=0)),
+            dbc.Row(dbc.Button('Buy Eco-Products',className="ms-auto", n_clicks=0, href='https://vilawatt.cat/es/la-moneda-vilawatt/los-bonos-vilawatt/')),
             html.Br(),
-            dbc.Row(dbc.Button('Buy Planting Toolkit',className="ms-auto", n_clicks=0)),
+            dbc.Row(dbc.Button('Buy Planting Toolkit',className="ms-auto", n_clicks=0, href='https://www.viladecans.cat/es/viladecans-repara-muebles-con-pales')),
         ],style={'fontFamily':'Montserrat'}),
         dbc.ModalFooter(
             dbc.Button('Close',id='close-exchange',className="ms-auto", n_clicks=0),style={'fontFamily':'Montserrat'}
